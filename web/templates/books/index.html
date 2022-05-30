@@ -14,8 +14,12 @@
   {% for book in books%}
       <tbody>
         <tr>
-          <td> <a href="{{url_for('update_book',id=book.id)}}">{{ book.title }} </a></td>
-          <td> {{ book.author }} </td>
+          <td> <a href="{{ url_for('books.update', id=book.id) }}"> {{ book.title }} </a></td>
+          {% for author in authors %}
+            {% if author.id == book.author_id %}
+              <td> <a href="{{ url_for('authors.update', id=book.author_id)}}"> {{ author.name }}</a></td>
+            {% endif %}
+          {% endfor %}
           <td> {{ book.genre }} </td>
           <td> {{ book.date }} </td>
         </tr>
