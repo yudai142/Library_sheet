@@ -1,26 +1,12 @@
 開発環境でflaskを起動する
-FLASK_ENV=development pipenv run flask run
+FLASK_APP=books.py FLASK_ENV=development pipenv run flask run
 
-(python3実行時)dbファイル生成
-from app import db
-
-(python3実行時)新規データベース作成
-db.create_all()
-
-仮想サーバに入る
-pipenv shell
-
-ルートディレクトリ定義
-export FLASK_APP=app
-
-開発者モードに切り替え(仮想サーバ内で)
+データベースの追加方法
+export FLASK_APP=books.py
 export FLASK_ENV=development
-
-フラスク起動(仮想サーバ内で)
-flask run
-
-仮想サーバから出る
-exit
+flask db init
+flask db migrate -m"first setup"
+flask db upgrade
 
 
 requirementsテキストにpipenvのライブラリを書き込む
