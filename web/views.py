@@ -41,3 +41,10 @@ def update_book(id):
         form.date.data = book.date
 
     return render_template('each_book.html', form=form, id=id)
+
+@app.route('/book/<int:id>/delete', methods=['GET','POST'])
+def delete_book(id):
+    book = Book.query.get(id)
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('index'))
