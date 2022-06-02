@@ -1,5 +1,5 @@
 from web import app, db
-from web.forms import BookForm
+from web.forms import BookForm, BookUpdateForm
 from web.models import Book, Author
 from flask import render_template, redirect, url_for, request
 from flask import Blueprint
@@ -8,9 +8,17 @@ books = Blueprint('books', __name__)
 
 @books.route('/', methods=['GET'])
 def index():
-    books = Book.query.order_by(Book.date.desc()).all()
+    books = Book.query.order_by(Book.date.desc()).paginate(page=1, per_page=app.config['ITEMS_PER_PAGE'], error_out=False)
     authors = db.session.query(Author).join(Book, Book.author_id == Author.id).all()
     return render_template('/books/index.html', books=books, authors=authors)
+
+@books.route('/books/pages/<int:page_num>', methods=['GET','POST'])
+def index_pages(page_num):
+
+    books = Book.query.order_by(Book.date.desc()).paginate(page=page_num, per_page=app.config['ITEMS_PER_PAGE'], error_out=False)
+    authors = db.session.query(Author).join(Book, Book.author_id == Author.id).all()
+    return render_template('books/index.html', books=books, authors=authors)
+
 
 @books.route('/books/register', methods=['GET','POST'])
 def register():
@@ -36,7 +44,9 @@ def update(id):
     registered_authors = db.session.query(Author).order_by('name')
     authors_list = [(i.id, i.name) for i in registered_authors]
 
-    form = BookForm()
+    # form = BookForm()
+    form = BookUpdateForm()
+    
     form.author.choices = authors_list
 
     if form.validate_on_submit():
