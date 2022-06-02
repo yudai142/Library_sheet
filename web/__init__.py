@@ -14,3 +14,6 @@ app.register_blueprint(books)
 
 from web.authors.views import authors
 app.register_blueprint(authors)
+
+from web.searches.views import searches
+app.register_blueprint(searches) 

@@ -6,6 +6,8 @@ class Book(db.Model):
     # author = db.Column(db.String(64), index=True)
     genre = db.Column(db.String(64), index=True)
     date = db.Column(db.Date)
+    recommended = db.Column(db.Integer)      #追加
+    comment = db.Column(db.String(256))      #追加
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
 
     def __repr__(self):

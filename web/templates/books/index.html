@@ -8,6 +8,7 @@
       <th scope="col">著者</th>
       <th scope="col">ジャンル</th>
       <th scope="col">読了日</th>
+      <th scope="col">オススメ度</th>
     </tr>
   </thead>
 
@@ -22,6 +23,7 @@
           {% endfor %}
           <td> {{ book.genre }} </td>
           <td> {{ book.date }} </td>
+          <td> {{ book.recommended }} </td>
         </tr>
       </tbody>
   {% endfor %}

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, TextAreaField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired
 
 class BookForm(FlaskForm):
@@ -8,6 +9,8 @@ class BookForm(FlaskForm):
     author = SelectField('著者', coerce=int, validators=[DataRequired()])
     genre = SelectField('ジャンル',choices=[('小説','小説'),('経営','経営'),('歴史','歴史'),('ビジネス','ビジネス'),('宗教哲学','宗教哲学'),('自然科学','自然科学'),('社会科学','社会科学'),('工学','工学'),('芸術','芸術'),('言語','言語'),('趣味','趣味'),('その他','その他')])
     date = DateField('読了日', format="%Y-%m-%d")
+    recommended = SelectField('オススメ度', choices=[('5','5: とてもオススメ'),('4','4: ややオススメ'),('3','3: 普通'),('2','2: 余りオススメしない'),('1','1: 全くオススメしない')]) #追加
+    comment = TextAreaField('コメント')  #追加
     submit = SubmitField('登録')
 
 class AuthorForm(FlaskForm):
@@ -20,3 +23,10 @@ class BookUpdateForm(BookForm):
 
 class AuthorUpdateForm(AuthorForm):
     submit = SubmitField('修正')
+
+class SearchForm(FlaskForm):
+    title = StringField('書籍')
+    author = SelectField('著者', coerce=int)
+    start_date = DateField('検索開始日', format="%Y-%m-%d")
+    end_date = DateField('検索終了日', format="%Y-%m-%d")
+    submit = SubmitField('検索')
