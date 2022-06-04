@@ -8,10 +8,6 @@ searches = Blueprint('searches', __name__)
 
 @searches.route('/searches/', methods=['GET','POST'])
 def index_search():
-    return render_template('searches/search.html', form=form)
-
-@searches.route('/searches/', methods=['GET','POST'])
-def index_search():
 
     registered_authors = db.session.query(Author).order_by('name')
     authors_list = [(0,"")]
